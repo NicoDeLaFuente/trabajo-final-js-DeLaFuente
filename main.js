@@ -1,75 +1,128 @@
-let nombre;
-let eleccionProducto;
-let precioLuces = 500;
-let precioSoporte = 2000;
-let precioMotor = 5800;
-let cantidad;
-let montoTotalPrimerArticulo;
-let montoTotalSegundoArticulo;
+//Creacion de los productos ofrecidos
+class Producto {
+    constructor(producto, precioMinorista, precioMayorista,) {
+        this.producto = producto;
+        this.precioMinorista = precioMinorista;
+        this.precioMayorista = precioMayorista;
+    }
+}
 
+const lucesLed = new Producto("Luces Led", 500, 300);
+const soporteTv = new Producto("Soporte de TV", 2000, 1500);
+const motorPorton = new Producto("Motor de porton", 5800, 3000);
+const cajasTermicas = new Producto("Cajas para termicas", 1250, 800);
+const spotLucesTecho = new Producto("Spot para luces de techo", 600, 350);
+
+const arrayProducto = [];
+
+arrayProducto.push(lucesLed);
+arrayProducto.push(soporteTv);
+arrayProducto.push(motorPorton);
+arrayProducto.push(cajasTermicas);
+arrayProducto.push(spotLucesTecho);
+
+const arrayProductosMinoristas = [];
+const arrayProductosMayoristas = [];
+const arrayProductosElegidos = [];
+
+arrayProductosElegidos.push(arrayProductosMinoristas);
+arrayProductosElegidos.push(arrayProductosMayoristas);
+
+
+//Funcion para elegir la opcion a realizar. 
+
+function menu() {
+    let opcion = parseInt(prompt(`Elija la acción que desea realizar: \n \n (Aclaración: solo podrá ingresar números. Ej: ponga 1 para comprar productos minorista) \n \n 1- Comprar productos minorista \n 2- Comprar productos mayorista \n 3- Soporte técnico \n 4- Salir \n\n Nota aclarativa: el mínimo de productos iguales para ser tomado como mayorista es de 10 unidades del mismo producto. Sin excepción`));
+    return opcion;
+};
+
+//funcion para comprar productos minorista
+function compraMinorista() {
+    const opcion = (prompt(`Elija el producto que desea comprar: \n\n 1- Luces Led \n 2- Soporte de TV \n 3- Motor de porton \n 4- Cajas para termicas \n 5- Spot para luces de techo\n\n Nota aclarativa: Escriba la opcion que desea tal y como se muestra arriba; caso contrario va a ser incorrecta la opcion elegida`));
+    let productoElegido = arrayProducto.find(producto => producto.producto === opcion);
+    let indiceProducto = arrayProducto.indexOf(productoElegido);
+    console.log(indiceProducto)
+    arrayProductosMinoristas.push(productoElegido);
+    console.log(arrayProductosMinoristas);
+    console.log(`Felicidades. Ha elegido comprar ${productoElegido.producto}. El precio minorista es de: ${productoElegido.precioMinorista} pesos.`)
+    let cantidadProducto = parseInt(prompt("Elija la cantidad que desea comprar: \n\n Recuerde que la cantidad máxima para compras minoristas es de 9 productos iguales."))
+    while (cantidadProducto >= 10) {
+        cantidadProducto = parseInt(prompt("La cantidad elegida supera el máximo para compras minoristas. Indique nuevamente la cantidad a comprar: \n\n Recuerde que la cantidad máxima para compras minoristas es de 9 productos iguales."))
+        if (cantidadProducto < 10) {
+            let precioTotalCompra = productoElegido.precioMinorista * cantidadProducto;
+            console.log(`El monto total a abonar por el producto es de ${precioTotalCompra}`);
+        }
+    }
+    if (cantidadProducto < 10) {
+        let precioTotalCompra = productoElegido.precioMinorista * cantidadProducto;
+        console.log(`El monto total a abonar por el producto  es de ${precioTotalCompra}`);
+    }
+}
+
+//funcion compra mayorista
+function compraMayorista() {
+    const opcion = (prompt(`Elija el producto que desea comprar: \n\n 1- Luces Led \n 2- Soporte de TV \n 3- Motor de porton \n 4- Cajas para termicas \n 5- Spot para luces de techo\n\n Nota aclarativa: Escriba la opcion que desea tal y como se muestra arriba; caso contrario va a ser incorrecta la opcion elegida`));
+    let productoElegido = arrayProducto.find(producto => producto.producto === opcion);
+    let indiceProducto = arrayProducto.indexOf(productoElegido);
+    console.log(indiceProducto)
+    arrayProductosMayoristas.push(productoElegido);
+    console.log(arrayProductosMayoristas);
+    console.log(`Felicidades. Ha elegido comprar ${productoElegido.producto}. El precio mayorista es de: ${productoElegido.precioMayorista} pesos.`)
+    let cantidadProducto = parseInt(prompt("Elija la cantidad que desea comprar: \n\n Recuerde que la cantidad mínima para compras mayorista es de 10 productos iguales."))
+    while (cantidadProducto < 10) {
+        cantidadProducto = parseInt(prompt("La cantidad elegida es inferior al mínimo exigido para compras mayoristas. Indique nuevamente la cantidad a comprar: \n\n Recuerde que la cantidad mínima para compras mayoristas es de 10 productos iguales."))
+        if (cantidadProducto >= 10) {
+            let precioTotalCompra = productoElegido.precioMinorista * cantidadProducto;
+            console.log(`El monto total a abonar por el producto es de ${precioTotalCompra}`);
+        }
+    }
+    if (cantidadProducto >= 10) {
+        let precioTotalCompra = productoElegido.precioMinorista * cantidadProducto;
+        console.log(`El monto total a abonar por el producto es de ${precioTotalCompra}`);
+    }
+}
+
+// funcion soporte tecnico
+function soporteTecnico() {
+    const opcion = prompt(`Elija el producto que ha comprado: \n\n 1- Luces Led \n 2- Soporte de TV \n 3- Motor de porton \n 4- Cajas para termicas \n 5- Spot para luces de techo\n\n Nota aclarativa: Escriba la opcion que desea tal y como se muestra arriba; caso contrario va a ser incorrecta la opcion elegida`);
+    const numeroTelefono = parseInt(prompt("Escriba su número de teléfono para que un especialista se comunique."));
+    let productoElegido = arrayProducto.find(producto => producto.producto === opcion);
+    const detalleReclamo = prompt(`Detalle lo ocurrido con el producto que ha comprado.`)
+    console.log("Felicidades. Se ha ingresado el reclamo correctamente.\n Un especialista se pondrá en contacto con usted a la brevedad. ")
+    console.log(`Detalles del reclamo realizado:\n\n Producto: ${productoElegido.producto}.\n Número de contacto: ${numeroTelefono} \n Reclamo:${detalleReclamo}. `)
+}
+
+//funcion salir
+function salir() {
+    console.log("Gracias por utilizar nuestro sitio web. Vuelva pronto.");
+}
+
+/** EJECUCION PROGRAMA **/
 alert("Electro DM. Artículos de electricidad al mejor precio.");
 nombre = prompt("Ingrese su nombre");
 
 if (nombre != "") {
-    alert("Bienvenido/a " + nombre + " a Electro DM");
+    console.log(`Bienvenido/a ${nombre} a Electro DM`);
 }
 
 while (nombre == "") {
-    nombre = prompt("No ha ingresado un nombre. Inténtelo de nuevo.");
+    nombre = console.log(`No ha ingresado un nombre. Inténtelo de nuevo.`);
     if (nombre != "") {
-        alert("Bienvenido/a " + nombre + " a Electro DM");
+        console.log(`Bienvenido/a ${nombre} a Electro DM`);
     }
 }
 
-eleccionProducto = parseInt(prompt("Elija el producto que desea comprar: \n \n (Aclaración: solo podrá ingresar números. Ej: ponga 1 para elegir luces) \n \n 1- luces LED. \n 2- soporte de TV. \n 3- motor de portón."));
-
-function productoElegido(eleccionProducto) {
-    while (eleccionProducto != 1 || eleccionProducto != 2 || eleccionProducto != 3) {
-        if (eleccionProducto == 1) {
-            return alert("Usted eligio el producto: Luces LED. Cada una tiene un valor de " + precioLuces + " pesos");
-        } else if (eleccionProducto == 2) {
-            return alert("Usted eligió el producto: soporte de TV. Cada uno tiene un precio de " + precioSoporte + " pesos");
-        } else if (eleccionProducto == 3) {
-            return alert("Usted eligió el producto: Motor de portón. Cada uno tiene un precio de " + precioMotor + " pesos");
-        }
-        eleccionProducto = parseInt(prompt("No ha ingresado una opcion correcta. Elija el producto que desea comprar: \n \n (Aclaración: solo podrá ingresar números. Ej: ponga 1 para elegir luces) \n \n 1- luces LED. \n 2- soporte de TV. \n 3- motor de porton."));
-    }
-}
-
-productoElegido(eleccionProducto);
-cantidad = parseInt(prompt("Ingrese la cantidad que desea comprar"));
-
-function multiplicacion(cantidad, eleccionProducto) {
-    if (eleccionProducto == 1) {
-        return cantidad * precioLuces;
-    } else if (eleccionProducto == 2) {
-        return cantidad * precioSoporte;
-    } else if (eleccionProducto == 3) {
-        return cantidad * precioMotor;
-    }
-}
-montoTotalPrimerArticulo = multiplicacion(cantidad, eleccionProducto);
-
-alert("El precio de su primer artículo es de: " + montoTotalPrimerArticulo + " pesos");
-let segundoArticulo = prompt("Desea comprar algo más? \n \n 1- Si \n 2- No ")
-
-while (segundoArticulo != 1 || segundoArticulo != 2) {
-    if (segundoArticulo == 1) {
-        eleccionProducto = parseInt(prompt("Elija el producto que desea comprar: \n \n (Aclaración: solo podrá ingresar números. Ej: ponga 1 para elegir luces) \n \n 1- luces LED. \n 2- soporte de TV. \n 3- motor de porton."));
-        productoElegido(eleccionProducto);
-        cantidad = parseInt(prompt("Ingrese la cantidad que desea comprar"));
-        montoTotalSegundoArticulo = multiplicacion(cantidad, eleccionProducto);
-        alert("El precio de su segundo articulo es de " + montoTotalSegundoArticulo + " pesos");
+let opcion = menu()
+switch (opcion) {
+    case 1:
+        compraMinorista();
         break;
-    } else if (segundoArticulo == 2) {
-        montoTotalSegundoArticulo = 0;
-        alert("El monto total de su compra es de: " + montoTotalPrimerArticulo + " pesos");
+    case 2:
+        compraMayorista();
         break;
-    } else {
-        segundoArticulo = prompt("La opción indicada no es correcta. Desea comprar algo más? \n \n 1- Si \n 2- No ")
-    }
-}
-
-let montoGlobal = alert("El monto global de su compra es de: " + (montoTotalPrimerArticulo + montoTotalSegundoArticulo) + " pesos");
-
-alert("Muchas gracias por confiar en nosotros. Puede pasar a retirar por el local 24 hs después de la fecha de compra");
+    case 3: soporteTecnico();
+        break;
+    case 4: salir();
+        break;
+    default: alert("La opcion elegida es incorrecta. Recargue e inténtelo de nuevo.");
+} 
