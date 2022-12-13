@@ -89,7 +89,7 @@ function soporteTecnico() {
     let productoElegido = arrayProducto.find(producto => producto.producto === opcion);
     const detalleReclamo = prompt(`Detalle lo ocurrido con el producto que ha comprado.`)
     console.log("Felicidades. Se ha ingresado el reclamo correctamente.\n Un especialista se pondrá en contacto con usted a la brevedad. ")
-    console.log(`Detalles del reclamo realizado:\n\n Producto: ${productoElegido.producto}.\n Número de contacto: ${numeroTelefono} \n Reclamo:${detalleReclamo}. `)
+    console.log(`Detalles del reclamo realizado:\n\n Nombre: ${nombre} \n Producto: ${productoElegido.producto}.\n Número de contacto: ${numeroTelefono} \n Reclamo: ${detalleReclamo}. `)
 }
 
 //funcion salir
